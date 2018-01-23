@@ -1,0 +1,4 @@
+<div class="hr-file-button">
+    <button [disabled]='disabled' class='btn btn-success btn-large'>{{btnTitle}}</button>
+    <input [disabled]='disabled' type="file" (change)="fileChange($event)" accept="{{accept}}" />
+</div>

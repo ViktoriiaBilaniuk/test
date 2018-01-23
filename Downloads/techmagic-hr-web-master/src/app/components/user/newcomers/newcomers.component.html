@@ -1,0 +1,10 @@
+<div>
+  <div class="page-header">
+    <h1>Newcomers</h1>
+  </div>
+  <ul class="month-birthday-list">
+    <li *ngFor="let user of users">
+      <hr-user-list-item [user]="user"></hr-user-list-item>
+    </li>
+  </ul>
+</div>

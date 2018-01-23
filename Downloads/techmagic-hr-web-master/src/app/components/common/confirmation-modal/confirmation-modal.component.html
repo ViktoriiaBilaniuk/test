@@ -1,0 +1,29 @@
+<!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-danger" data-toggle="modal">
+  <i class="fa fa-times" aria-hidden="true"></i>
+  Delete
+</button>
+
+<!-- Modal -->
+<div class="modal fade" [id]="custom_id" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-center">Please confirm your action</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete {{target}}?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onConfirm()">Confirm</button>
+      </div>
+    </div>
+    <!-- End of modal content -->
+
+  </div>
+</div>
+<!-- End of modal -->

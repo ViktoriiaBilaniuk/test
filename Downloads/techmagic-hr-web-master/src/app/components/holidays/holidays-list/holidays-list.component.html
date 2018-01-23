@@ -1,0 +1,20 @@
+<div>
+  <div class="page-header">
+    <h1>Holidays</h1>
+  </div>
+  <form>
+    <div class="controll-wrapper">
+      <select name="years" class="form-control col-sm-4" [(ngModel)]="chosenHolidayYear"
+              (ngModelChange)="getHolidays()">
+        <option *ngFor="let year of holidaysYears" [value]="year">{{year}}</option>
+      </select>
+      <button type="button" class="btn btn-default" id="addHolidayBtn" [routerLink]="['/holidays/add']">Add</button>
+
+    </div>
+  </form>
+  <ul class="list-group">
+    <li *ngFor="let holiday of holidays;" class="list-group-item">
+      <hr-holidays-list-item [holiday]="holiday"></hr-holidays-list-item>
+    </li>
+  </ul>
+</div>

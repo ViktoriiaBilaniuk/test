@@ -1,0 +1,32 @@
+<div>
+  <div class="page-header">
+    <h1 class="form-title" *ngIf="!holidayId">Create holiday</h1>
+    <h1 class="form-title" *ngIf="holidayId">Edit holiday</h1>
+  </div>
+
+  <form novalidate class="holidayForm" #holidayForm="ngForm" id="holidayForm" name="holidayForm">
+    <input type="text" id="date" class="form-control datepicker-holiday" name="date" placeholder="Holiday date"
+           required>
+    <input type="text"
+           name="name"
+           class="form-control"
+           placeholder="Holiday name"
+           [(ngModel)]="holiday.name"
+           maxlength="50"
+           minlength="1"
+           required
+    >
+  </form>
+
+  <button class="btn btn-warning control-btn" [routerLink]="['/holidays/list']">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Cancel
+  </button>
+  <!-- Delete button with confirmation modal -->
+  <hr-confirmation-modal class="control-btn" [custom_id]="holidayId" *ngIf="holidayId" [target]="'holiday'"
+                         (confirm)="onDeleteHoliday(holidayId)"></hr-confirmation-modal>
+  <button class="btn btn-primary control-btn" (click)="onSubmit()" [disabled]="!holidayForm.form.valid">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Save
+  </button>
+</div>

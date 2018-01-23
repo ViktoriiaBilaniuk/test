@@ -1,0 +1,16 @@
+.user-row
+  padding-top: 20px
+  overflow: hidden
+  &__image-box
+    height: 100%
+    margin: 0 auto
+    max-height: 200px
+    display: inline-block
+    border: 1px solid lightgray
+  &__img
+    max-height: inherit
+  &__project-name:not(:last-child):after
+    content: ', '
+  @media (min-width: 768px)
+    &__wrap-border
+      border-left: 2px solid gray

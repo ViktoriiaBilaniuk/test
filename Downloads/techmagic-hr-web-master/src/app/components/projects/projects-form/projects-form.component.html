@@ -1,0 +1,50 @@
+<div>
+  <div class="page-header">
+    <h1 class="form-title" *ngIf="!projectId">Create project</h1>
+    <h1 class="form-title" *ngIf="projectId">Edit project</h1>
+  </div>
+
+  <form novalidate #addProjectForm="ngForm">
+    <fieldset>
+      <legend>Project info</legend>
+      <div class="form-group">
+        <div class="required">
+          <input type="text"
+                 class="form-control"
+                 placeholder="name"
+                 name="name"
+                 [(ngModel)]="project.name"
+                 maxlength="50"
+                 minlength="1"
+                 required>
+        </div>
+      </div><!-- End of form-group -->
+    </fieldset>
+  </form>
+  <tag-input [ngModel]="project._users"
+             [addOnBlur]="false"
+             [clearOnBlur]="false"
+             [ripple]="false"
+             [tabindex]="-1"
+             (onAdd)="onItemAdded($event)"
+             (onRemove)="onItemRemoved($event)"
+             [onlyFromAutocomplete]="true"
+             placeholder="Enter person"
+             secondaryPlaceholder="Enter Project People">
+    <tag-input-dropdown [showDropdownIfEmpty]="true" [autocompleteItems]="employees"></tag-input-dropdown>
+  </tag-input>
+  <br>
+  <br>
+  <button class="btn btn-warning control-btn" (click)="goToList()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Cancel
+  </button>
+  <!-- Delete button with confirmation modal -->
+  <hr-confirmation-modal class="control-btn" [custom_id]="projectId" *ngIf="projectId" [target]="'project'"
+                         (confirm)="deleteProject()"></hr-confirmation-modal>
+  <button class="btn btn-primary control-btn" (click)="onSubmit(addProjectForm)"
+          [disabled]="!addProjectForm.form.valid">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Save
+  </button>
+</div>

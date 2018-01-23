@@ -1,0 +1,80 @@
+<div class="finance-component">
+  <div class="row">
+    <form (submit)='upload($event)' class="col-md-12 form-inline upload-inputs">
+
+      <div class="form-group">
+        <input type="number" [(ngModel)]='exchangeRate' [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Exchange rate">
+      </div>
+
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" [(ngModel)]="onlyUsd" [ngModelOptions]="{standalone: true}"> only USD calculations
+        </label>
+      </div>
+
+      <div class="form-group file-holder">
+        <hr-file-button [btnTitle]="'Upload file'" [disabled]='!exchangeRate' (change)='fileChange($event)' [accept]='".csv"'></hr-file-button>
+        <span class='filename' *ngIf='fileName'>{{fileName}}</span>
+      </div>
+
+      <div class="form-group file-holder">
+        <hr-file-button [btnTitle]="'Upload additional file'" [disabled]='!exchangeRate || !isMainFileUploaded' (change)='additionalFileChanges($event)' [accept]='".csv"'></hr-file-button>
+        <span class='filename' *ngIf='additionalfileName'>{{additionalfileName}}</span>
+      </div>
+
+      <div class="form-group">
+        <button [disabled]='!exchangeRate  || !isMainFileUploaded' class='btn btn-primary' type="submit">Submit</button>
+      </div>
+
+      <h2 class="text-danger" *ngIf='errorMessage'>{{errorMessage}}</h2>
+
+    </form>
+  </div>
+
+  <h1 class="text-center" *ngIf='dataEmpty'>There is no data for this period</h1>
+
+  <button *ngIf='tableData && !dataEmpty' type='button' class='btn btn-warning pull-right financial-actions' (click)='sendEmailToAll()'>Send email to all</button>
+
+  <button *ngIf='tableData && !dataEmpty' type='button' class='btn btn-info pull-right download-btn financial-actions' (click)='download()'>Download as .csv</button>
+
+  <table class='table table-bordered table-hover' *ngIf='tableData && !dataEmpty'>
+
+    <thead>
+      <tr>
+        <td>Email</td>
+        <td>Full Sum</td>
+        <td>On hands</td>
+        <td>Actions</td>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor='let data of tableData'>
+        <td>
+          <span>{{data.email.value}}</span>
+        </td>
+        <td>
+          <span>{{data.sendToAccount.value}}</span>
+        </td>
+        <td>
+          <span>{{data.sendToCard.value}}</span>
+        </td>
+        <td>
+          <a href="javascript:void(0)" (click)='sendEmail(data)' class="btn btn-primary btn-sm">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i> Send email
+          </a>
+          <a href="javascript:void(0)" (click)='modalShow = true; modalInfo = data' class="btn btn-success btn-sm">
+            <i class="fa fa-money" aria-hidden="true"></i> Show detailed info
+          </a>
+          <a href="javascript:void(0)" *ngIf="data.additionalCalculations" (click)='additionalModalShow = true; additionalModalInfo = data.additionalCalculations' class="btn btn-success btn-sm">
+            <i class="fa fa-money" aria-hidden="true"></i> Show additional info
+          </a>
+        </td>
+      </tr>
+    </tbody>
+
+  </table>
+</div>
+
+<hr-finance-modal [(show)]='modalShow' (closed)='modalClose()' [info]='modalInfo'></hr-finance-modal>
+<hr-additional-modal [(show)]='additionalModalShow' (closed)='additionalModalClose()' [info]='additionalModalInfo'></hr-additional-modal>

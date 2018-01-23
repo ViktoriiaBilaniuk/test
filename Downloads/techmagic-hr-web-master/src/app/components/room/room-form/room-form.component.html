@@ -1,0 +1,46 @@
+<div>
+  <div class="page-header">
+    <h1 class="form-title" *ngIf="!roomId">Create room</h1>
+    <h1 class="form-title" *ngIf="roomId">Edit room</h1>
+  </div>
+
+  <form novalidate #addRoomForm="ngForm">
+    <fieldset>
+      <legend>Room info</legend>
+      <div class="form-group">
+        <div class="required">
+          <input type="text"
+                 class="form-control"
+                 placeholder="name"
+                 name="name"
+                 [ngModel]="room.name"
+                 maxlength="50"
+                 minlength="1"
+                 required>
+        </div>
+      </div>
+      <div class="form-group">
+         <div class="required">
+           <input type="number"
+                  class="form-control"
+                  placeholder="capacity"
+                  name="capacity"
+                  min="0"
+                  [ngModel]="room.capacity">
+         </div>
+       </div>
+    </fieldset>
+  </form>
+
+  <button class="btn btn-warning control-btn" (click)="goToList()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Cancel
+  </button>
+  <!-- Delete button with confirmation modal -->
+  <hr-confirmation-modal class="control-btn" [custom_id]="roomId" *ngIf="roomId" [target]="'room'"
+                         (confirm)="deleteRoom()"></hr-confirmation-modal>
+  <button class="btn btn-primary control-btn" (click)="onSubmit(addRoomForm)" [disabled]="!addRoomForm.form.valid">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Save
+  </button>
+</div>

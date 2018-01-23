@@ -1,0 +1,52 @@
+<div class="login-wrapper col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+  <img src="../../assets/img/logo_on_white.png" alt="logo">
+  <h1>HR</h1>
+  <form #loginForm="ngForm">
+    <fieldset class="well material_shadow_btm">
+      <div class="form-group">
+        <select name="_company" [(ngModel)]="selectedCompany" class="form-control" required>
+          <option *ngFor="let company of companies" [value]="company._id">{{company.name}}</option>
+        </select>
+        <input type="email"
+               class="form-control"
+               placeholder="Email"
+               ngModel
+               name="email"
+               (keyup)="validationError=''"
+               required>
+        <input type="password"
+               class="form-control"
+               placeholder="Password"
+               name="password"
+               ngModel
+               (keyup)="validationError=''"
+               required>
+        <div>
+          <p class="validation-error">{{validationError}}</p>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success btn-block" (click)="onSubmit(loginForm)"
+              [disabled]='!selectedCompany'>
+        <i class="fa fa-sign-in" aria-hidden="true"></i>
+        Log in
+      </button>
+    </fieldset>
+  </form>
+
+  <div class="links-wrapper">
+    <a [routerLink]="['/forgot-password']">
+      Forgot password
+    </a>
+
+    <a [routerLink]="['/sign-up']" [hidden]="isUrl('hr.techmagic.co')">
+      Register new company
+    </a>
+  </div>
+
+  <div class="google-auth--wrapper">
+    <div class="text-center">OR</div>
+    <div>
+      <hr-google-btn></hr-google-btn>
+    </div>
+  </div>
+</div>

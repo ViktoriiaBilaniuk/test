@@ -1,0 +1,8 @@
+<div class="note-item-wrapper">
+  <h4>{{note.createdAt | date: 'mediumDate'}}</h4>
+  <p>{{note.text}}</p>
+  <p>
+    <i>by {{note._author.firstName}} {{note._author.lastName}} </i>
+    <i [routerLink]="['../edit', note._id]" class="fa fa-pencil pointer pull-right" aria-hidden="true"></i>
+  </p>
+</div>

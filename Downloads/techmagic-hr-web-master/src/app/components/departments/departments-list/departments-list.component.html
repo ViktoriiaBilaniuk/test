@@ -1,0 +1,22 @@
+<div>
+  <div class="page-header text-center">
+    <h1>Departments</h1>
+  </div>
+  <div class="text-right" *ngIf="departments?.length !== 0">
+    <div>
+      <button type="button" class="btn btn-default" [routerLink]="['/departments/add']">Add</button>
+    </div>
+    <br>
+  </div>
+  <ul class="list-group rooms-list">
+    <li *ngFor="let  department of departments" class="list-group-item">
+      <hr-departments-list-item [department]="department"></hr-departments-list-item>
+    </li>
+  </ul>
+  <div class="page-header" *ngIf="departments?.length === 0">
+    <h2>There are no departments yet</h2>
+    <h4>You can create them <a [routerLink]="['/departments/add']">here</a></h4>
+  </div>
+</div>
+
+

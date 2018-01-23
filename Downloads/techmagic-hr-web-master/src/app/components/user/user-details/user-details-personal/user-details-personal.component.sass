@@ -1,0 +1,22 @@
+.list-group-item.short-description
+  white-space: pre-wrap
+
+.my-text
+  overflow: hidden
+  position: relative
+  &:before
+    padding-left: 7px
+    margin-right: 11px
+    content: "\F129"
+    display: inline-block
+    font: normal normal normal 14px/1 FontAwesome
+    font-size: inherit
+    text-rendering: auto
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+
+ul > li > ul > li:not(:last-child)
+  padding: 0 0 10px
+
+.project__name:not(:last-child):after
+  content: ', '

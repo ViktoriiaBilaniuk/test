@@ -1,0 +1,113 @@
+<div class="login-wrapper col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+  <img src="../../assets/img/logo_on_white.png" alt="logo">
+  <h1>HR</h1>
+  <h2>
+    Please enter your company name and credentials.
+  </h2>
+  <form novalidate #signUpForm="ngForm" id="signUpForm" name="signUpForm">
+    <fieldset class="well material_shadow_btm">
+      <div class="form-group">
+        <input type="text"
+               class="form-control"
+               placeholder="Company name"
+               id="companyName"
+               ngModel
+               autocapitalize="off"
+               autocomplete="off"
+               autocorrect="off"
+               maxlength="50"
+               minlength="1"
+               #companyName="ngModel"
+               pattern="[A-Za-z0-9]+"
+               name="name"
+               required>
+        <p *ngIf="companyName.errors?.required && (companyName.touched || formIsSubmited)" class="validation-error">You
+          can't leave this empty</p>
+        <p *ngIf="notUniqueCompany && companyName.dirty && companyName.touched" class="validation-error">Not unique
+          company name</p>
+        <br>
+        <!--Todo: Nick: Bug with pattern. I didn't register well. Was some validation error with first name  -->
+        <input type="text"
+               class="form-control"
+               placeholder="First name"
+               ngModel
+               autocapitalize="off"
+               autocomplete="off"
+               autocorrect="off"
+               maxlength="50"
+               minlength="1"
+               pattern="[A-Za-z]"
+               #firstName="ngModel"
+               name="firstName"
+               required>
+        <p *ngIf="firstName.errors?.required && (firstName.touched || formIsSubmited)" class="validation-error">You
+          can't leave this empty</p>
+        <p *ngIf="firstNameInvalid && formIsSubmited" class="validation-error">First name can contain only Latin
+          letters, dashes, and space</p>
+
+        <input type="name"
+               class="form-control"
+               placeholder="Last name"
+               ngModel
+               autocapitalize="off"
+               autocomplete="off"
+               autocorrect="off"
+               maxlength="50"
+               minlength="1"
+               pattern="[A-Za-z]+"
+               #lastName="ngModel"
+               name="lastName"
+               required>
+        <p *ngIf="lastName.errors?.required && (lastName.touched || formIsSubmited)" class="validation-error">You can't
+          leave this empty</p>
+        <p *ngIf="lastNameInvalid && formIsSubmited" class="validation-error">Last name can contain only Latin letters,
+          dashes, and space</p>
+
+        <input type="email"
+               class="form-control"
+               id="userEmail"
+               placeholder="Email"
+               ngModel
+               autocapitalize="off"
+               autocomplete="off"
+               autocorrect="off"
+               name="email"
+               #email="ngModel"
+               pattern="[a-zA-Z0-9]*[_a-zA-Z0-9\.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})"
+               required>
+        <p *ngIf="email.errors?.pattern && email.dirty && email.touched" class="validation-error">Invalid email</p>
+        <p *ngIf="notUniqueEmail && email.dirty && email.touched" class="validation-error">Not unique email</p>
+        <p *ngIf="email.errors?.required && (email.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+
+        <input type="password"
+               class="form-control"
+               placeholder="Password"
+               name="password"
+               ngModel
+               autocapitalize="off"
+               autocomplete="off"
+               autocorrect="off"
+               minlength="6"
+               required
+               #pass="ngModel">
+        <p *ngIf="pass.errors?.minlength && pass.dirty && pass.touched" class="validation-error">Password must contain
+          at least 6 characters</p>
+        <p *ngIf="pass.errors?.required && (pass.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+      </div>
+      <button class="btn btn-success btn-block" (click)="onSubmit(signUpForm)" [disabled]="!signUpForm.form.valid">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Create new company
+      </button>
+    </fieldset>
+  </form>
+
+  <a [routerLink]="['/login']">
+    Go To Sign In
+  </a>
+
+  <br>
+  <br>
+  <br>
+</div>

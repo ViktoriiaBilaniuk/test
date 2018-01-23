@@ -1,0 +1,90 @@
+<div class="calendar-title">
+  <h1>Calendar of "{{project.name}}" project</h1>
+</div>
+<div class="calendar-controll clearfix">
+  <div class="calendar-controll__side calendar-controll__side_left">
+    <!-- empty -->
+  </div>
+  <div class="calendar-controll__side calendar-controll__side_right">
+    <span class="calendar-controll__filter">
+      <input class="form-control calendar-controll__input calendar-controll__input_center" id="dateFrom"
+             readonly>
+      <span class="calendar-controll__span">to</span>
+      <input class="form-control calendar-controll__input calendar-controll__input_center" id="dateTo"
+             readonly>
+    </span>
+  </div>
+</div>
+
+<div class="calendar-table calendar-table_flex calendar-table_border-top calendar-table_border-left">
+  <div class="calendar-name calendar-name_border-right calendar-table__side">
+    <div class="calendar-name__title">Employee</div>
+    <div
+      id="calendar-name__list"
+      class="calendar-name__list"
+      hrSyncScroll
+      [synchScrollTargets]="calendarBody"
+      #calendarNameList
+    >
+      <div *ngFor="let user of users" class="calendar-name__item">
+        <span class="calendar-name__a">
+          <img class="calendar-name__ava" src="{{user.photoOrigin || defaultUserPhoto}}" alt="{{user.firstName}} {{user.lastName}}">
+          <span class="calendar-name__name">{{user.firstName}} {{user.lastName}}</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="calendar-table__side calendar-table__side_inner" #calendarTableSide>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+      <thead>
+      <tr class="calendar__month-row">
+        <th
+          class="calendar__month-coll"
+          *ngFor="let month of calendar; let i = index;"
+          hrScrollCentering [target]="calendarTableSide"
+          [isCenter]="month.isCurrent"
+          [currentIndex]="i"
+          [calendar]="calendar">
+          <div class="calendar__days-title">{{month.name}} {{month.year}}</div>
+          <div class="calendar__days-wrapper">
+            <span *ngFor="let day of month.days" class="calendar__days-header">{{day.getDate()}}</span>
+          </div>
+        </th>
+      </tr>
+      </thead>
+      <tbody
+        class="calendar__body"
+        id="calendar-body"
+        hrSyncScroll
+        [synchScrollTargets]="calendarNameList"
+        #calendarBody>
+        <tr *ngFor="let user of users">
+          <td *ngFor="let month of calendar">
+            <table cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td
+                  class="cell"
+                  *ngFor="let day of month.days"
+                  [ngClass]="{'cell_weekend': day.getDay() === 6 || day.getDay() === 0,
+                              'cell_holiday': isHoliday(day, month),
+                              'cell_day-off': isDayoff(day, user, 'day-off'),
+                              'cell_illness': isDayoff(day, user, 'illness'),
+                              'cell_vacation': isDayoff(day, user, 'vacation')}">
+
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ul class="calendar-legend">
+  <li class="calendar-legend__item calendar-legend__item_weekend">Weekend</li>
+  <li class="calendar-legend__item calendar-legend__item_holiday">Holiday</li>
+  <li class="calendar-legend__item calendar-legend__item_vacation">Vacation</li>
+  <li class="calendar-legend__item calendar-legend__item_day-off">Day off</li>
+  <li class="calendar-legend__item calendar-legend__item_illness">Illness</li>
+</ul>

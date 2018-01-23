@@ -1,0 +1,39 @@
+<div>
+  <h4>PDP's</h4>
+  <p *ngIf='!user.pdps'>User haven't any pdp yet.</p>
+  <ul *ngIf='user.pdps'>
+    <li *ngFor='let pdp of filterDates(user.pdps); let $index = index'>
+      <span>{{pdp | date:'MMMM y'}}</span>
+      <a href="javascript:void(0)" class='text-danger' (click)='removePdp($index)' *ngIf="loggedUserData?.role !== 0">
+        <i class="fa fa-times" aria-hidden="true"></i>
+      </a>
+    </li>
+  </ul>
+
+  <div class="row" *ngIf="loggedUserData?.role !== 0">
+    <div class="col-md-3">
+      <div class="form-group">
+        <hr-datepicker (onDateChanged)='updatePdps($event)'></hr-datepicker>
+      </div>
+    </div>
+    <a (click)='savePdps()' class='add-pdp-btn' href="javascript:void(0)">
+      <i class="fa fa-plus"  aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <div *ngIf='user?._pdp' class="input-group">
+    <a href="{{user._pdp}}" target="_blank" class="btn btn-primary control-btn">PDP Link</a>
+  </div>
+
+  <div *ngIf='user?._oneToOne' class="input-group">
+    <a href="{{user._oneToOne}}" target="_blank" class="btn btn-primary control-btn" *ngIf='user?._oneToOne && loggedUserData?.role > 0'>One to one Link</a>
+  </div>
+
+  <div *ngIf='!user?._pdp && !user?._oneToOne' class="input-group">
+    <p>No PDP Link</p>
+  </div>
+
+</div>
+<hr>
+<em class="text-muted">* Only current user and HR can see this</em>
+<br>

@@ -1,0 +1,20 @@
+<div>
+  <div class="page-header text-center">
+    <h1>Rooms</h1>
+  </div>
+  <div class="text-right" *ngIf="rooms?.length !== 0">
+    <div>
+      <button type="button" class="btn btn-default" [routerLink]="['/rooms/add']">Add</button>
+    </div>
+    <br>
+  </div>
+  <ul class="list-group rooms-list">
+    <li *ngFor="let room of rooms" class="list-group-item">
+      <hr-room-list-item [room]="room"></hr-room-list-item>
+    </li>
+  </ul>
+  <div class="page-header" *ngIf="rooms?.length === 0">
+    <h2>There are no rooms yet</h2>
+    <h4>You can create them <a [routerLink]="['/rooms/add']">here</a></h4>
+  </div>
+</div>

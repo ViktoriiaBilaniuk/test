@@ -1,0 +1,39 @@
+<div>
+  <h3 *ngIf="!this.noteId">Add Note</h3>
+  <h3 *ngIf="this.noteId">Edit Note</h3>
+
+  <form novalidate #notesForm="ngForm" id="noteForm">
+    <div>
+      <label>
+        <input type="text" class="form-control" id="datepicker-note" name="createdAt" placeholder="Date of note">
+      </label>
+      <label>
+        <select name="_author" class="form-control" [ngModel]="note?._author?._id" required #author="ngModel">
+          <option value="">Author</option>
+          <option *ngFor="let author of authors" [ngValue]="author._id">{{author.firstName}} {{author.lastName}}
+          </option>
+        </select>
+      </label>
+    </div>
+    <p *ngIf="author.errors && (author.touched || formIsSubmited)" class="validation-error">You can not add note without
+      author</p>
+    <p *ngIf="invalidNoteDate && formIsSubmited" class="validation-error">You can't leave date empty</p>
+
+    <textarea name="text" class="form-control" cols="70" rows="10" [ngModel]="note?.text" #notesText="ngModel"
+              required></textarea>
+    <p *ngIf="notesText.errors && (notesText.touched || formIsSubmited)" class="validation-error">You can not add empty
+      note</p>
+  </form>
+
+  <button class="btn btn-warning control-btn" (click)="goToList()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Cancel
+  </button>
+  <!-- Delete button with confirmation modal -->
+  <hr-confirmation-modal class="control-btn" [custom_id]="noteId" *ngIf="noteId" [target]="'note'"
+                         (confirm)="removeNote()"></hr-confirmation-modal>
+  <button class="btn btn-primary control-btn" (click)="onSubmit(notesForm)">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Save
+  </button>
+</div>

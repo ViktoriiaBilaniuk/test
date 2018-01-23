@@ -1,0 +1,21 @@
+<div>
+  <div class="page-header text-center">
+    <h1>Constants</h1>
+  </div>
+  <form (submit)='updateConstants($event)'>
+    <div class="form-group" *ngFor='let prop of financeConstantsKeys'>
+      <label for="{{prop}}">{{convertToText(prop)}}</label>
+      <input
+        name='{{prop}}'
+        class="form-control"
+        [(ngModel)]='model[prop]'
+        type="number"
+        id='{{prop}}'
+        value='{{financeConstants[prop]}}'
+        placeholder="{{prop}}">
+    </div>
+    <div class="form-group pull-right">
+      <button class='btn btn-primary' type="submit">Save</button>
+    </div>
+  </form>
+</div>

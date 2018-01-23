@@ -1,0 +1,307 @@
+<div class="col-md-6 col-md-offset-3">
+
+  <div class="page-header">
+    <h1 class="form-title" *ngIf="!userId">Create employee</h1>
+    <h1 class="form-title" *ngIf="userId && !isOwnProfile">Edit employee</h1>
+    <h1 class="form-title" *ngIf="isOwnProfile">Edit My Profile</h1>
+  </div>
+
+  <form novalidate #addUserForm="ngForm" id="userForm">
+    <fieldset>
+      <legend>Login info</legend>
+      <div class="form-group">
+        <div class="required">
+          <input type="text"
+                 class="form-control"
+                 placeholder="email"
+                 name="email"
+                 [ngModel]="user.email"
+                 #email="ngModel"
+                 pattern="[a-zA-Z0-9]*[_a-zA-Z0-9\.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,4})"
+                 required
+                 [readonly]="currentUserRole === 0">
+        </div>
+        <p *ngIf="email.errors?.pattern && email.dirty && email.touched " class="validation-error">Invalid email</p>
+        <p *ngIf="email.errors?.required && (email.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+
+        <div [ngClass]="{required: !userId}">
+          <input type="text"
+                 class="form-control"
+                 placeholder="password"
+                 name="password"
+                 [ngModel]="user.password"
+                 minlength="6"
+                 #pass="ngModel"
+                 [required]="!userId">
+        </div>
+        <p *ngIf="pass.errors?.minlength && pass.dirty && pass.touched" class="validation-error">Password must contain
+          at least 6 characters</p>
+        <p *ngIf="pass.errors?.required && (pass.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+
+        <div *ngIf="!isOwnProfile && currentUserRole === 2">
+          <select name="role" class="form-control" [ngModel]="user.role">
+            <option value="">role</option>
+            <option value="0">Employee</option>
+            <option value="1">HR</option>
+          </select>
+        </div>
+        <label *ngIf="user.role !== 2 && currentUserRole">
+          <input type="checkbox" name="isActive" [ngModel]="user.isActive === false ? false : true">
+          Can sign In
+        </label>
+        <div *ngIf="tr_isCurrentUserAdmin && !isOwnProfile">
+          <label>
+            <input type="checkbox" name="tr_isAdmin" [ngModel]="user.tr_isAdmin">
+            Reporting Admin
+          </label>
+        </div>
+      </div><!-- End of form-group -->
+    </fieldset>
+
+    <fieldset>
+      <legend>Personal info:</legend>
+      <div class="form-group" *ngIf="currentUserRole !== 0">
+        <label class="btn btn-default btn-file">
+          Upload photo <input type="file" (change)="fileChange($event)" accept=".png,.jpeg,.jpg">
+        </label>
+      </div>
+
+      <div class="form-group">
+        <div class="required">
+          <input type="text"
+                 class="form-control"
+                 [ngClass]="{'ng-invalid': firstNameInvalid}"
+                 placeholder="First name"
+                 name="firstName"
+                 [ngModel]="user.firstName"
+                 (keyup)="firstNameInvalid=false"
+                 #fName="ngModel"
+                 [pattern]="firstNamePattern"
+                 [readonly]="currentUserRole === 0"
+                 maxlength="30"
+                 minlength="2"
+                 required>
+        </div>
+        <p *ngIf="fName.errors?.required && (fName.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+        <p *ngIf="firstNameInvalid && formIsSubmited" class="validation-error">First name can contain only Latin
+          letters, dashes, and space</p>
+
+        <div class="required">
+          <input type="text"
+                 class="form-control"
+                 [ngClass]="{'ng-invalid': lastNameInvalid}"
+                 placeholder="Last name"
+                 name="lastName"
+                 [ngModel]="user.lastName"
+                 (keyup)="lastNameInvalid=false"
+                 #lName="ngModel"
+                 [pattern]="lastNamePattern"
+                 [readonly]="currentUserRole === 0"
+                 maxlength="30"
+                 minlength="2"
+                 required>
+        </div>
+        <p *ngIf="lName.errors?.required && (lName.touched || formIsSubmited)" class="validation-error">You can't leave
+          this empty</p>
+        <p *ngIf="lastNameInvalid && formIsSubmited" class="validation-error">Last name can contain only Latin letters,
+          dashes, and space</p>
+
+        <div class="hr-datepicker">
+          <label>
+            <input type="text" class="form-control" id="datepicker-bth" name="birthday"
+                   [disabled]="currentUserRole === 0">
+            <span>Date of Birth</span>
+          </label>
+        </div>
+
+        <div *ngIf="currentUserRole !== 0">
+          <input type="radio" name="gender" id="male-gender" value="0" [ngModel]="user.gender">
+          <label for="male-gender">Male</label>
+          <input type="radio" name="gender" id="female-gender" value="1" [ngModel]="user.gender">
+          <label for="female-gender">Female</label>
+        </div>
+      </div><!-- End of input-group -->
+    </fieldset>
+
+    <fieldset>
+      <legend>Contacts</legend>
+      <div class="form-group">
+        <div>
+          <input type="text" class="form-control" placeholder="skype" name="skype" [ngModel]="user.skype">
+        </div>
+        <div>
+          <input type="text"
+                 class="form-control"
+                 placeholder="phone number"
+                 name="phone"
+                 [ngModel]="user.phone">
+        </div>
+        <div>
+          <select name="_room" class="form-control" [ngModel]="user._room?._id">
+            <option [ngValue]="null">room</option>
+            <option *ngFor="let room of rooms" [ngValue]="room._id">{{room.name}}</option>
+          </select>
+        </div>
+        <div>
+          <input type="text"
+                 class="form-control"
+                 placeholder="emergency contact number"
+                 name="emergencyPhone"
+                 [ngModel]="user.emergencyContact?.phone">
+          <input type="text"
+                 class="form-control"
+                 placeholder="emergency contact"
+                 name="emergencyName"
+                 [ngModel]="user.emergencyContact?.name">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <div class="form-group">
+        <legend>Additional info</legend>
+        <input type="text"
+               class="form-control"
+               placeholder="city of relocation"
+               name="relocationCity"
+               [ngModel]="user.relocationCity">
+        <input type="text"
+               class="form-control"
+               placeholder="clothing size"
+               name="clothingSize"
+               [ngModel]="user.clothingSize">
+        <input type="text"
+               class="form-control"
+               placeholder="car number"
+               name="carId"
+               [ngModel]="user.carId">
+        <textarea class="form-control"
+                  placeholder="short presentation"
+                  name="description"
+                  cols="30" rows="10"
+                  maxlength="500"
+                  [ngModel]="user.description">
+        </textarea>
+      </div>
+    </fieldset>
+
+    <fieldset [hidden]="currentUserRole === 0">
+      <legend>Professional info</legend>
+
+      <div class="form-group">
+        <div>
+          <select class="form-control" name="_department" [ngModel]="user._department?._id">
+            <option [ngValue]="null">department</option>
+            <option *ngFor="let department of departments" [ngValue]="department._id">{{department.name}}</option>
+          </select>
+        </div>
+        <div *ngIf="currentUserRole">
+          <div class="required">
+            <select class="form-control" name="_lead" #lead="ngModel" [ngModel]="user._lead?._id" required>
+              <option [ngValue]="null">lead</option>
+              <option *ngFor="let lead of leads" [ngValue]="lead._id">{{lead.firstName}} {{lead.lastName}}</option>
+            </select>
+          </div>
+          <p *ngIf="lead.errors?.required && formIsSubmited" class="validation-error">You can't leave this empty</p>
+        </div>
+
+        <div class="hr-datepicker">
+          <label>
+            <input type="text" class="form-control" id="datepicker-fwd" name="firstWorkingDay" required>
+            <span class="required">first working day</span>
+          </label>
+        </div>
+        <p *ngIf="invalidFirstWorkingDay && formIsSubmited" class="validation-error">You can't leave this empty</p>
+
+
+        <div class="hr-datepicker">
+          <label>
+            <input type="text" class="form-control" id="datepicker-gfwd" name="generalFirstWorkingDay">
+            <span>first working day in IT</span>
+          </label>
+        </div>
+
+        <div class="hr-datepicker">
+          <label>
+            <input type="text" class="form-control" id="datepicker-tpe" name="trialPeriodEnds">
+            <span>trial period ends</span>
+          </label>
+        </div>
+        <p *ngIf="invalidTpeMsg && formIsSubmited" class="validation-error">{{invalidTpeMsg}}</p>
+      </div>
+    </fieldset>
+
+
+    <fieldset [hidden]="currentUserRole === 0">
+      <legend>PDP info</legend>
+      <div class="form-group">
+        <label>PDP link:</label>
+        <input type="url"
+               class="form-control"
+               placeholder="PDP link"
+               [pattern]="linkPattern"
+               name="_pdp"
+               [ngModel]="user._pdp"
+               #fName="ngModel"
+               [readonly]="currentUserRole === 0">
+      </div>
+      <div class="form-group">
+        <label>One to one link:</label>
+        <input type="url"
+               class="form-control"
+               placeholder="One to one link"
+               [pattern]="linkPattern"
+               name="_oneToOne"
+               [ngModel]="user._oneToOne"
+               #fName="ngModel"
+               [readonly]="currentUserRole === 0">
+      </div>
+    </fieldset>
+
+    <fieldset [hidden]="currentUserRole === 0">
+      <legend>Out of the company</legend>
+      <div class="hr-datepicker">
+        <label>
+          <input type="text" class="form-control" id="datepicker-lwd" name="lastWorkingDay">
+          <span>last working day</span>
+        </label>
+      </div>
+      <p *ngIf="invalidLwdMsg && formIsSubmited" class="validation-error">{{invalidLwdMsg}}</p>
+
+      <select class="form-control" name="_reason" #reason="ngModel" [ngModel]="user._reason?._id" [disabled]="disabledReason">
+        <option [ngValue]="null">Select the reason</option>
+        <option *ngFor="let reason of reasons" [ngValue]="reason._id">{{reason.name}}</option>
+      </select>
+      <div class="form-group">
+        <textarea class="form-control" placeholder="comments" name="reason_comments" cols="30" rows="8" maxlength="500"
+                  [ngModel]="user.reason_comments" ></textarea>
+      </div>
+    </fieldset>
+
+    <div>
+      <p *ngIf="serverError || invalidImgMsg" class="validation-error">
+        {{serverError}}
+        <br>
+        {{invalidImgMsg}}
+      </p>
+    </div>
+  </form>
+
+  <button class="btn btn-warning control-btn" (click)="goBack()">
+    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+    Cancel
+  </button>
+  <!-- Delete button with confirmation modal -->
+  <hr-confirmation-modal class="control-btn" [custom_id]="userId"
+                         *ngIf="userId && !isOwnProfile && currentUserRole === 2" [target]="'user'"
+                         (confirm)="removeUser()"></hr-confirmation-modal>
+
+  <button class="btn btn-primary control-btn" (click)="onSubmit(addUserForm)">
+    <i class="fa fa-floppy-o" aria-hidden="true"></i>
+    Save
+  </button>
+  <hr>
+</div>

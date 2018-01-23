@@ -1,0 +1,71 @@
+@import "./../node_modules/balloon-css/balloon.min.css"
+@import 'app/components/common/spinner/spinner.component.sass'
+
+html, body
+  height: auto
+  min-height: 100%
+  position: relative
+  font-family: Arial, Helvetica, sans-serif
+
+img
+  max-width: 100%
+  max-height: 100%
+
+textarea
+  resize: vertical
+
+ul
+  padding-left: 0
+  list-style: none
+
+table.table
+  margin-bottom: 0
+  border-collapse: collapse
+
+.validation-error
+  color: red
+
+.datepicker table tr td.disabled,
+.datepicker table tr td.disabled:hover
+  background: rgba(211, 211, 211, 0.56)
+  pointer-events: none
+
+.main
+  padding-top: 51px
+  &.container
+    min-height: calc(100vh - 56px)
+    box-shadow: 0px -1px 5px 0px rgba(0, 0, 0, 0.2)
+
+.page-header
+  margin: 20px auto
+
+input:not([readonly]).ng-touched.ng-valid,
+.ng-dirty.ng-touched
+  border-color: #3c763d
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+
+input:not([readonly]).ng-touched.ng-valid:focus,
+input:not([readonly]).ng-dirty.ng-touched:focus
+  border-color: #2b542c
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #67b168
+
+input:not([readonly]).ng-invalid.ng-dirty.ng-touched,
+input:not([readonly]).ng-pristine.ng-invalid.ng-touched
+  border-color: #a94442
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075)
+
+input:not([readonly]).ng-invalid.ng-dirty.ng-touched:focus,
+input:not([readonly]).ng-pristine.ng-invalid.ng-touched
+  border-color: #843534
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075), 0 0 6px #ce8483
+
+.ng2-dropdown-menu
+  z-index: 200 !important
+  height: 300px !important
+
+.disabled
+  opacity: 0.5
+  cursor: no-drop
+  pointer-events: none
+  user-select: none
+

@@ -1,0 +1,63 @@
+<div class="row user-row">
+  <div class="col-sm-2 text-center">
+    <a [routerLink]="['/employees/list/', user._id, 'personal']" class="user-row__image-box">
+      <img src="{{user.photo || defaultUserPhoto}}" alt="user" class="user-row__img">
+    </a>
+  </div>
+  <div class="col-sm-5">
+    <a [routerLink]="['/employees/list/', user._id, 'personal']">
+      <h4 class="user-names">{{user.firstName}} {{user.lastName}}</h4>
+    </a>
+    <p *ngIf="user._department?.name">
+      <i class="fa fa-tags fa-fw" aria-hidden="true"></i>
+      {{user._department?.name}}
+    </p>
+    <p *ngIf="user._lead">
+      <i class="fa fa-user-secret fa-fw" aria-hidden="true"></i>
+      <span [ngClass]="{'text-danger': user._lead.lastWorkingDay }"
+            [style.fontWeight]="user._lead.lastWorkingDay ? 600 : 100">
+              {{user._lead.firstName}} {{user._lead.lastName}}
+      </span>
+      <sup *ngIf="user._lead.lastWorkingDay">
+        <i class="fa fa-question-circle"
+           aria-hidden="true"
+           data-toggle="tooltip"
+           title="Last working day: {{user._lead.lastWorkingDay | date: 'mediumDate'}}.">
+        </i>
+      </sup>
+    </p>
+    <p *ngIf="user._projects && user._projects.length">
+      <i aria-hidden="true" class="fa fa-briefcase"></i>&nbsp;
+      <span *ngFor="let project of user._projects" class="user-row__project-name">{{project.name}}</span>
+    </p>
+  </div>
+  <div class="col-sm-5 user-row__wrap-border">
+    <p *ngIf="pdp === 'nulled'">
+      <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+      <span class="text-danger"> PDP is missing or outdated</span>
+    </p>
+    <p>
+      <i class="fa fa-envelope" aria-hidden="true"></i>
+      <span>{{user.email}}</span>
+    </p>
+    <p *ngIf="user.skype">
+      <i class="fa fa-skype" aria-hidden="true"></i>
+      <span>{{user.skype}}</span>
+    </p>
+    <p *ngIf="user._room">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      <span>{{user._room?.name}}</span>
+    </p>
+    <p *ngIf="user.birthday">
+      <i class="fa fa-gift" aria-hidden="true"></i>
+      <span *ngIf="currentUserRole !== 0">{{user.birthday | date: 'mediumDate'}}</span>
+      <span *ngIf="currentUserRole === 0">{{user.birthday | date: 'MMM dd'}}</span>
+    </p>
+    <p *ngIf="user.firstWorkingDay && !isWorkStarted">
+      <i class="fa fa-calendar" aria-hidden="true"></i>
+      <span *ngIf="currentUserRole !== 0">{{user.firstWorkingDay | date: 'mediumDate'}}</span>
+      <span *ngIf="currentUserRole === 0">{{user.firstWorkingDay | date: 'MMM dd'}}</span>
+    </p>
+
+  </div>
+</div>

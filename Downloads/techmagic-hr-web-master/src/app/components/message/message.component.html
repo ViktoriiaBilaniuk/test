@@ -1,0 +1,22 @@
+<div class="modal fade bs-example-modal-sm" [ngClass]="{'in block': isOpen}">
+  <div class="modal-dialog modal-sm custom-modal-dialog" role="document">
+    <div class="modal-content">
+      <button (click)="closeModal()" class="close custom-close">
+        <span>&times;</span>
+      </button>
+      <div
+        class="alert custom-alert"
+        role="alert"
+        [ngClass]="{'alert-success': isSuccess(),
+                    'alert-info': isInfo(),
+                    'alert-warning': isWarning(),
+                    'alert-danger': isDanger()}">
+        <strong *ngIf="isSuccess()">Well done!</strong>
+        <strong *ngIf="isInfo()">Heads up!</strong>
+        <strong *ngIf="isWarning()">Warning!</strong>
+        <strong *ngIf="isDanger()">Error!</strong> {{message}}
+      </div>
+    </div>
+  </div>
+</div>
+

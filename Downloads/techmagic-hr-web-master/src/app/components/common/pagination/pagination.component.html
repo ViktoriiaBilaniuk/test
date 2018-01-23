@@ -1,0 +1,8 @@
+<div class="text-center">
+  <ul class="pagination pagination-lg">
+    <li *ngFor="let page of pagesArr" [ngClass]="{'disabled active' : page === currentPage}">
+      <span *ngIf="page !== currentPage" (click)="onChangePage(page)">{{page}}</span>
+      <span *ngIf="page === currentPage">{{page}}</span>
+    </li>
+  </ul>
+</div>

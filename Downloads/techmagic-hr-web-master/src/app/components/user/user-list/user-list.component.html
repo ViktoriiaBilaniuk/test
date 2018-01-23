@@ -1,0 +1,84 @@
+<div>
+  <div class="page-header">
+    <h1>Ninjas
+      <small>({{count}})</small>
+    </h1>
+    <div class="add-user-btn1" *ngIf="elements.addBtn">
+      <button *ngIf="currentUserRole" type="button" class="btn btn-default" [routerLink]="['/employees/add']">
+        <i class="fa fa-plus-square" aria-hidden="true"></i>
+        Add New Employee
+      </button>
+    </div>
+  </div>
+
+  <section class="form-inline">
+    <div class="form-group" *ngIf="elements.search">
+      <input type="text"
+             placeholder="search"
+             class="user-search form-control"
+             name="namefilter"
+             [(ngModel)]="searchObj.name"
+             (ngModelChange)="userSearchOnChange();">
+    </div>
+    <div class="form-group" *ngIf="elements.filterByDepartment">
+      <select name="departmentFilter"
+              class="departmentFilter form-control"
+              [(ngModel)]="searchObj.department"
+              (ngModelChange)="updateURL()">
+        <option value="">Filter by department</option>
+        <option *ngFor="let department of departments" [ngValue]="department._id">{{department.name}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="elements.filterByProject">
+      <select name="projectFilter"
+              class="projectFilter form-control"
+              [(ngModel)]="searchObj.project"
+              (ngModelChange)="updateURL()">
+        <option value="">Filter by project</option>
+        <option *ngFor="let project of projects" [ngValue]="project._id">{{project.name}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="elements.filterByLead">
+      <select name="leadFilter"
+              class="leadFilter form-control"
+              [(ngModel)]="searchObj.lead"
+              (ngModelChange)="updateURL()">
+        <option value="">Filter by lead</option>
+        <option *ngFor="let lead of leads" [ngValue]="lead._id">{{lead.firstName}} {{lead.lastName}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="elements.filterByRoom">
+      <select name="roomFilter"
+              class="roomFilter form-control"
+              [(ngModel)]="searchObj['_room']"
+              (ngModelChange)="updateURL()">
+        <option value="">Filter by Room</option>
+        <option *ngFor="let room of rooms" [ngValue]="room._id">{{room.name}}</option>
+      </select>
+    </div>
+    <div class="form-group" *ngIf="elements.filterByReason">
+      <select name="reasonFilter"
+              class="reasonFilter form-control"
+              [(ngModel)]="searchObj.reason"
+              (ngModelChange)="updateURL()">
+        <option value="">Filter by reason</option>
+        <option *ngFor="let reason of reasons" [ngValue]="reason._id">{{reason.name}}</option>
+      </select>
+    </div>
+    <!--<div class="form-group add-user-btn" *ngIf="elements.addBtn">
+      <button *ngIf="currentUserRole" type="button" class="btn btn-default" [routerLink]="['/employees/add']">
+        <i class="fa fa-plus-square" aria-hidden="true"></i>
+        Add New Employee
+      </button>
+    </div>-->
+  </section>
+
+
+  <ul class="users-list">
+    <li *ngFor="let user of users">
+      <hr-user-list-item [user]="user" [currentUserRole]="currentUserRole"></hr-user-list-item>
+    </li>
+  </ul>
+
+  <hr-pagination [count]="count" [offset]="offset" (changePageEvent)="searchUsers($event)"></hr-pagination>
+</div>

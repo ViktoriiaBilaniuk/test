@@ -1,0 +1,11 @@
+<div class="holiday-item-wrapper">
+  <div class="room-row">
+    <div class="main-info">
+      <span>{{holiday.date | date: 'mediumDate'}} - {{holiday.name}}</span>
+
+      <div class="pull-right">
+        <i [routerLink]="['/holidays/edit', holiday._id]" class="fa fa-pencil pointer" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>

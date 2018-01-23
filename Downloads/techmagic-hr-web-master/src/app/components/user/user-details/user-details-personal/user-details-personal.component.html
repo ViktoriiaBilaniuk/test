@@ -1,0 +1,87 @@
+<div>
+  <ul class="list-group">
+    <li class="list-group-item">
+      <i class="fa fa-envelope fa-fw" aria-hidden="true"></i>
+      Email: {{user.email}}
+    </li>
+    <li class="list-group-item" *ngIf="user.skype">
+      <i class="fa fa-skype fa-fw" aria-hidden="true"></i>
+      Skype: {{user.skype}}
+    </li>
+    <li class="list-group-item" *ngIf="user.phone">
+      <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+      Phone number: {{user.phone}}
+    </li>
+    <li class="list-group-item" *ngIf="user._room">
+      <i class="fa fa-map-marker fa-fw" aria-hidden="true"></i>
+      Room: {{user._room.name}}
+    </li>
+    <li class="list-group-item" *ngIf="user._department">
+      <i class="fa fa-tags fa-fw" aria-hidden="true"></i>
+      Department: {{user._department.name}}
+    </li>
+    <li class="list-group-item" *ngIf="user._lead && user._lead.lastName">
+      <i class="fa fa-user-secret fa-fw" aria-hidden="true"></i>
+      Lead: {{user._lead.firstName}} {{user._lead.lastName}}
+    </li>
+    <li class="list-group-item"  *ngIf="user._projects && user._projects.length">
+      <i aria-hidden="true" class="fa fa-briefcase"></i>
+      <span>Project:</span>
+      <span *ngFor="let project of user._projects" class="project__name">{{project.name}}</span>
+    </li>
+    <li class="list-group-item" *ngIf="user.birthday">
+      <i class="fa fa-birthday-cake fa-fw" aria-hidden="true"></i>
+      Date of birth:
+      <span *ngIf="currentUserRole !== 0">{{user.birthday | date: 'mediumDate'}}</span>
+      <span *ngIf="currentUserRole === 0">{{user.birthday | date: 'MMM dd'}}</span>
+    </li>
+    <li class="list-group-item" *ngIf="user.relocationCity">
+      <i class="fa fa-truck fa-fw" aria-hidden="true"></i>
+      City of relocation: {{user.relocationCity}}
+    </li>
+    <li class="list-group-item" *ngIf="user.clothingSize">
+      <i class="fa fa-user-o" aria-hidden="true"></i>
+      Clothing size: {{user.clothingSize}}
+    </li>
+    <li class="list-group-item" *ngIf="user.carId">
+      <i class="fa fa-car" aria-hidden="true"></i>
+      Car number: {{user.carId}}
+    </li>
+    <li class="list-group-item" *ngIf="user.firstWorkingDay">
+      <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+      First working day: {{user.firstWorkingDay | date: 'mediumDate'}}
+    </li>
+    <li class="list-group-item"
+        *ngIf="user.generalFirstWorkingDay && (currentUserRole !== 0 || currentUserId == user._id)">
+      <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+      First working day in IT: {{user.generalFirstWorkingDay | date: 'mediumDate'}}
+    </li>
+    <li class="list-group-item" *ngIf="user.trialPeriodEnds && (currentUserRole !== 0 || currentUserId == user._id)">
+      <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+      Trial period ends: {{user.trialPeriodEnds | date: 'mediumDate'}}
+    </li>
+    <li class="list-group-item" *ngIf="user.lastWorkingDay && (currentUserRole !== 0 || currentUserId == user._id)">
+      <i class="fa fa-calendar fa-fw" aria-hidden="true"></i>
+      Last working day: {{user.lastWorkingDay | date: 'mediumDate'}}
+      <div  *ngIf="user._reason && (currentUserRole !== 0)">
+        <i class="fa fa-lightbulb-o fa-fw" aria-hidden="true"></i>
+        Reason: {{user._reason.name}}
+      </div>
+      <div  *ngIf="user.reason_comments && (currentUserRole !== 0)">
+        <i class="fa fa-comment fa-fw" aria-hidden="true"></i>
+        Comment: {{user.reason_comments }}
+      </div>
+    </li>
+    <li class="list-group-item"
+        *ngIf="(user.emergencyContact && user.emergencyContact.phone) && (currentUserRole !== 0 || currentUserId == user._id)">
+      <i class="fa fa-phone fa-fw" aria-hidden="true"></i>
+      Emergency phone number: {{user.emergencyContact.phone}}
+    </li>
+    <li class="list-group-item"
+        *ngIf="(user.emergencyContact && user.emergencyContact.name) && (currentUserRole !== 0 || currentUserId == user._id)">
+      <i class="fa fa-user-circle fa-fw" aria-hidden="true"></i>
+      Emergency Contact: {{user.emergencyContact.name}}
+    </li>
+    <li class="list-group-item short-description" *ngIf="user.description"><div class="my-text">About me: {{user.description}}</div></li>
+  </ul>
+</div>

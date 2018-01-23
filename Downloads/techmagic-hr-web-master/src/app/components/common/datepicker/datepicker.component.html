@@ -1,0 +1,48 @@
+<div class="hr-datepicker-wrapper">
+    <div class="form-group">
+        <input 
+            readonly 
+            type="text" 
+            (click)='showDatepicker = !showDatepicker' 
+            (clickOutside)='hideDatepicker($event)'
+            [(ngModel)]='this.datepickerText' 
+            class="form-control hr-datepicker-input">
+    </div>
+
+    <div *ngIf='showDatepicker' class="hr-datepicker-container">
+        <table>
+            <thead>
+                <tr>
+                    <th (click)='prevYear(); this.createInputString();' class="hr-datepicker-prev hr-datepicker-year-select">«</th>
+                    <th colspan="2" class="hr-datepicker-year">
+                        {{year}}
+                    </th>
+                    <th (click)='nextYear(); this.createInputString();' class="hr-datepicker-next hr-datepicker-year-select">»</th>
+                </tr>
+            </thead>
+            <tbody class="monthes" >
+                <tr>
+                    <td *ngFor='let month of months4; let $index = index' [ngClass]='{"active-month": $index === currentMonth}'>
+                        <button (click)='selectMonth(currentMonth = $index); this.createInputString();'>
+                            {{month}}
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td *ngFor='let month of months8; let $index = index' [ngClass]='{"active-month": $index + 4 === currentMonth}'>
+                        <button (click)='selectMonth(currentMonth = 4 + $index); this.createInputString();'>
+                            {{month}}
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td *ngFor='let month of months12; let $index = index' [ngClass]='{"active-month": $index + 8 === currentMonth}'>
+                        <button (click)='selectMonth(currentMonth = 8 + $index); this.createInputString();'>
+                            {{month}}
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

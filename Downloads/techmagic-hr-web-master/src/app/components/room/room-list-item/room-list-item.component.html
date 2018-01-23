@@ -1,0 +1,14 @@
+<div class="room-list-item-wrapper">
+  <div class="room-row">
+    <div class="main-info clearfix">
+      <span class="main-info__left pull-left">{{room.name}}</span>
+      <div class="main-info__right pull-right">
+        <span *ngIf='room.occupied !== null && room.occupied !== undefined' class="room-capacity-info">
+          <span *ngIf='room.occupied !== null && room.occupied !== undefined'>{{room.occupied}}</span>
+          <span *ngIf='room.capacity'> / {{room.capacity}}</span>
+        </span>
+        <i (click)="goToEdit()" class="fa fa-pencil pointer" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+</div>

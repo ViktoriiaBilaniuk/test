@@ -1,0 +1,22 @@
+<div class="modal fade" [ngClass]='{"in showModal": show}' role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close"  (click)="close()" data-dismiss="modal">&times;</button>
+        <h3 class="modal-title text-center">User info</h3>
+      </div>
+      <div class="modal-body">
+        <p *ngFor='let key of info'>
+          <strong>{{key.description}}:</strong> {{key.value}} {{key.currency}}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="close()">Ok</button>
+      </div>
+    </div>
+    <!-- End of modal content -->
+
+  </div>
+</div>

@@ -1,0 +1,139 @@
+<div class="well">
+  <ul class="nav nav-pills text-center">
+    <li routerLinkActive="active">
+      <a [routerLink]="['../current']">{{currentYear?.displayFrom}} - {{currentYear?.displayTo}}</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['../next']">{{nextYear?.displayFrom}} - {{nextYear?.displayTo}}</a>
+    </li>
+  </ul>
+  <hr>
+  <div class="tab-content">
+    <div id="menu1" class="tab-pane fade active in">
+
+      <div>
+        <h4>Request {{ type }}:</h4>
+
+        <div class="input-daterange input-group" id="datepicker" *ngIf='canEdit'>
+          <input type="text" class="input-sm form-control" id="startDate" name="start">
+          <span class="input-group-addon">to</span>
+          <input type="text" class="input-sm form-control" id="endDate" name="end" >
+        </div>
+
+        <p *ngIf="hasCrossDates" class="alert alert-warning">The dates which you select contains holiday
+          Please make separate request for those dates</p>
+        <p *ngIf="errorMessage !== ''" class="alert alert-warning">{{ errorMessage }}</p>
+
+        <div *ngIf='canEdit'>
+          <p *ngIf="type === 'vacation'"><label class="myLabel">Used paid {{ type }} days:</label> <b>{{paidVacDays}}</b></p>
+          <p *ngIf="type === 'vacation'"><label class="myLabel">Used total {{ type }} days:</label> <b>{{totalVacDays}}</b></p>
+          <p *ngIf="type === 'vacation'"><label class="myLabel">Unused paid days:</label><b>{{18 - paidVacDays}}</b></p>
+          <p><label class="myLabel">Requested calendar days:</label> <b>{{calendarDays}}</b></p>
+          <p><label class="myLabel">Requested working days:</label> <b>{{workingDays}}</b></p>
+        </div>
+
+        <!--<p *ngIf="workingDays > availableDays" class="alert alert-warning">Sorry, but you can not request more than-->
+        <!--{{availableDays}} days</p>-->
+
+        <div class='request-btn-wrapper' *ngIf='canEdit'>
+          <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#myModal"
+                  [disabled]="(!workingDays || hasCrossDates)">
+            Request
+          </button>
+          <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h3 class="modal-title text-center">Please confirm your action</h3>
+                </div>
+                <div class="modal-body">
+                  <p>Are you sure you want to request {{ type }} for {{ range.displayFrom}} -
+                    {{range.displayTo}}?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="addItem(range)">Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p *ngIf="!items || items.length < 1">No requests for this period.</p>
+
+        <div class="panel panel-default" *ngFor="let item of items">
+          <div class="panel-body item">
+            <i *ngIf="item?.isAccepted" class="fa fa-check-circle approved-mark" aria-hidden="true"></i>
+            <i *ngIf="item?.isAccepted === false" class="fa fa-times-circle-o rejected-mark" aria-hidden="true"></i>
+            <span>{{item?.displayFrom}} - {{item?.displayTo}} </span>
+            <span><mark>&nbsp;Paid: {{item?.isPaid}} </mark></span>
+            <div class="remove-btn">
+              <span *ngIf='isLead'>
+                <button *ngIf="!item.isAccepted" type="button" class="btn btn-warning right-btn" data-toggle="modal"
+                        [attr.data-target]='"#a"+(item._id)'>
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  Accept
+                </button>
+                <button *ngIf="item.isAccepted" type="button" class="btn btn-success right-btn" data-toggle="modal"
+                        [attr.data-target]='"#a"+(item._id)'>
+                  <i class="fa fa-clock-o" aria-hidden="true"></i>
+                  Accepted
+                </button>
+                <div class="modal fade" [attr.id]='"a"+(item._id)' tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                          aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Please confirm or reject {{ type }}</h4>
+                      </div>
+                      <div class="modal-body">
+                          <p class="alert alert-info text-center">{{item.displayFrom}} - {{item.displayTo}}</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button *ngIf="item.isAccepted === null || item.isAccepted === true" type="button"
+                                class="btn btn-danger" data-dismiss="modal"
+                                (click)="approveItem(type, item._id, false)">Disapprove</button>
+                        <button *ngIf="!item.isAccepted" type="button" class="btn btn-success" data-dismiss="modal"
+                                (click)="approveItem(type, item._id, true)">Approve</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+              <span *ngIf='canEdit'>
+                <button *ngIf="!item?.disabled || item?.isAccepted === false || this.admin" type="button"
+                        class="btn btn-danger right-btn" data-toggle="modal" [attr.data-target]='"#m"+(item._id)'>
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                  Delete
+                </button>
+                <div class="modal fade" [attr.id]='"m"+(item._id)' tabindex="-1" role="dialog">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                          aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Please confirm your action</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure you want to delete {{ type }} for {{item.displayFrom}} - {{item.displayTo}} ?</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                (click)="removeItem(type, item)">Confirm</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

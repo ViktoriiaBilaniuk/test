@@ -1,0 +1,20 @@
+<div>
+  <div class="page-header">
+    <h1>PDP</h1>
+  </div>
+
+  <div class="row" *ngIf='users'>
+    <div class="col-md-3">
+      <hr-datepicker [years]='years' [months]='months' (onDateChanged)='selectPdpUsers($event)' (onYearChanged)='calculateMonths($event)'></hr-datepicker>
+    </div>
+  </div>
+
+  <ul class="pdp-users" *ngIf='users'>
+    <li *ngFor="let user of users.outdated">
+      <hr-user-list-item [user]="user" pdp='nulled'></hr-user-list-item>
+    </li>
+    <li *ngFor="let user of pdpUsers">
+      <hr-user-list-item [user]="user"></hr-user-list-item>
+    </li>
+  </ul>
+</div>

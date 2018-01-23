@@ -1,0 +1,20 @@
+<div>
+  <div class="page-header text-center">
+    <h1>Reasons</h1>
+  </div>
+  <div class="text-right" *ngIf="reasons?.length !== 0">
+    <div>
+      <button type="button" class="btn btn-default" [routerLink]="['/reasons/add']">Add</button>
+    </div>
+    <br>
+  </div>
+  <ul class="list-group reasons-list">
+    <li *ngFor="let reason of reasons" class="list-group-item">
+      <hr-reasons-list-item [reason]="reason"></hr-reasons-list-item>
+    </li>
+  </ul>
+  <div class="page-header" *ngIf="reasons?.length === 0">
+    <h2>There are no reasons yet</h2>
+    <h4>You can create them <a [routerLink]="['/reasons/add']">here</a></h4>
+  </div>
+</div>

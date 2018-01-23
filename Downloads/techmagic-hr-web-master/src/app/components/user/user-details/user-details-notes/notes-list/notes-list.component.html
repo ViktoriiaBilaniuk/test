@@ -1,0 +1,12 @@
+<div>
+  <ul class="notes-list">
+    <li *ngFor="let note of user.notes">
+      <hr-notes-list-item [note]="note"></hr-notes-list-item>
+    </li>
+  </ul>
+
+  <button type="button" class="btn btn-default" [routerLink]="['../add']">
+    <i class="fa fa-plus-square" aria-hidden="true"></i>
+    Add note
+  </button>
+</div>

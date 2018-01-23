@@ -1,0 +1,212 @@
+.calendar
+  &-title
+    padding: 0 0 10px 0
+  &-controll
+    margin-bottom: 20px
+    &__side
+      display: block
+      &_left
+        float: left
+      &_right
+        float: right
+    &__span
+      padding: 5px
+    &__select
+      padding: 0
+      width: 155px
+      margin-right: 10px
+      display: inline-block
+    &__filter
+      margin-right: 10px
+      display: inline-block
+    &__input
+      width: auto
+      display: inline-block
+      background: #fff
+      &_center
+        text-align: center
+  &-legend
+    padding: 0
+    font-size: 0
+    margin: 0 0 20px 0
+    list-style-type: none
+    &__item
+      font-size: 14px
+      position: relative
+      vertical-align: top
+      display: inline-block
+      padding: 10px 0 10px 20px
+      text-transform: capitalize
+      &:before
+        top: 0
+        left: 0
+        bottom: 0
+        content: ''
+        width: 14px
+        margin: auto
+        height: 14px
+        overflow: hidden
+        position: absolute
+        border-radius: 50%
+        display: inline-block
+        background: rgb(150, 176, 163)
+      &:not(:first-child)
+        margin-left: 20px
+      &_weekend:before
+        background: #efefef !important
+      &_holiday:before
+        background: rgb(255, 120, 120) !important
+      &_vacation:before
+        background: rgb(62, 201, 97) !important
+      &_day-off:before
+        background: rgb(202, 140, 212) !important
+      &_illness:before
+        background: rgb(100, 173, 245) !important
+      &_requested:before
+        background: rgb(255, 191, 74) !important
+  &-table
+    width: 100%
+    margin-bottom: 20px
+    &_border-top
+      border-top: 1px solid #ddd
+    &_border-left
+      border-right: 1px solid #ddd
+    &_flex
+      display: flex
+      border-bottom: 1px solid #ddd
+    &__side
+      position: static
+      &_inner
+        overflow-x: scroll
+        border-right: 1px solid #ddd
+        table
+          margin: 0
+          tbody
+            display: block
+            overflow: hidden
+            overflow-y: auto
+            max-height: 60vh
+          td
+            padding: 0
+          th
+            padding: 0
+            text-align: center
+            border-bottom: none
+
+  &-name
+    width: auto
+    max-width: 100%
+    width: 180px
+    margin-bottom: 0
+    &_border-right
+      border-right: 1px solid #ddd
+    &__title
+      height: 48px
+      font-weight: 700
+      overflow: hidden
+      min-width: 140px
+      line-height: 48px
+      text-align: center
+      vertical-align: middle
+      border-left: 1px solid #ddd
+      border-bottom: 1px solid #ddd
+    &__list
+      margin: 0
+      padding: 0
+      width: 100%
+      display: block
+      overflow: auto
+      max-height: 60vh
+      padding-bottom: 16px
+      border-top: 1px solid #ddd
+      border-left: 1px solid #ddd
+    &__item
+      border-left: 1px solid #ddd
+      border-bottom: 1px solid #ddd
+    &__a
+      display: block
+      white-space: nowrap
+      padding: 4px 10px
+      height: 27px
+      text-overflow: ellipsis
+      overflow: hidden
+    &__ava
+      width: 20px
+      height: 20px
+      background: #ddd
+      padding: 0
+      margin: 0
+  &__month-row
+    display: flex
+  &__month-coll
+    width: auto
+    border: none
+    display: inline-flex
+    flex-direction: column
+  &__days-title
+    border-left: 1px solid #ddd
+  &__days-wrapper
+    width: auto
+    display: table
+  &__days-header
+    width: 28px
+    height: 28px
+    line-height: 28px
+    min-width: 28px
+    max-width: 28px
+    display: table-cell
+    box-shadow: inset 1px 1px 0 #dddddd, inset 0 -1px 0px #ddd
+    border: none
+  &__body
+    overflow: auto
+    overflow-y: hidden
+  &__print
+    position: static
+
+* /deep/ table
+  border-collapse: collapse
+  &:before, &:after
+    content: ''
+    display: table
+
+* /deep/ .calendar__body
+  > tr:last-child
+    border-bottom: 1px solid #ddd
+  td
+    padding: 0
+    border: none
+  tbody > tr > th,
+  tfoot > tr > th,
+  thead > tr > td,
+  tbody > tr > td,
+  tfoot > tr > td
+    border-bottom: 1px solid #ddd
+  .table > thead > tr > th, .table > tbody > tr > th,
+  .table > tfoot > tr > th, .table > thead > tr > td,
+  .table > tbody > tr > td, .table > tfoot > tr > td
+    border-top: none
+  .cell
+    padding: 0
+    width: 28px
+    height: 28px
+    line-height: 28px
+    min-width: 28px
+    max-width: 28px
+    display: table-cell
+    box-shadow: inset 1px 1px 0 #dddddd
+    border: none
+    &_disapprove
+      background: rgb(150, 176, 163)
+    &_vacation
+      background: rgb(62, 201, 97)
+    &_day-off
+      background: rgb(202, 140, 212)
+    &_illness
+      background: rgb(100, 173, 245)
+    &_requested
+      background: rgb(255, 191, 74)
+      cursor: pointer
+    &_weekend
+      background: #efefef !important
+    &_holiday
+      background: rgb(255, 120, 120) !important

@@ -1,0 +1,20 @@
+<div class="body">
+  <div class="container">
+    <div class="search">
+      <p class="searching-for">Searching for</p>
+      <p class="category">Baby Clothes</p>
+
+    </div>
+    <div class="toggle">
+      <a
+        class="toggle-tab"
+        *ngFor="let item of navTabs"
+        [ngClass]="{'toggle-tab-active': selectedItem == item}"
+        (click)="activateLink($event, item)">
+        {{item.name}}
+      </a>
+    </div>
+  </div>
+  <hr class="line">
+</div>
+<app-component1></app-component1>

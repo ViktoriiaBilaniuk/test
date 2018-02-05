@@ -1,0 +1,210 @@
+.container{
+  width: 1239px;
+  height: 839px;
+  border-radius: 2px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(129, 131, 143, 0.08);
+  border: solid 1px #edeff0;
+  margin: 0 auto;
+
+  input[type=checkbox] {
+    visibility: hidden;
+    position: absolute;
+  }
+  .checkbox{
+    height: 21px;
+    label{
+      display: block;
+      width: 21px;
+      height: 21px;
+      position: relative;
+      background-image: none;
+      background-color: white;
+      box-shadow: 0 2px 4px 0 rgba(129, 131, 143, 0.08);
+      border: solid 1px #edeff0;
+    }
+  }
+  .checkbox input[type=checkbox]:checked + label{
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("../../assets/icn-checkmark-checkbox.png");
+    background-color: #767df6;
+  }
+  .top-bar{
+    display: flex;
+    padding: 41px 0px 15px 53px;
+
+    .bar-items{
+      margin-left: 18px;
+      display: flex;
+      .bar-item{
+        font-family: PTSans;
+        font-size: 13px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: left;
+        color: #b3bfcc;
+        margin: 0px;
+        display: flex;
+        align-items: center;
+        margin-left: 30px;
+      }
+      .bar-item_active{
+        color: #81838f;
+      }
+    }
+  }
+  .table{
+    width: 1174px;
+    border: solid 1px #e3e9ef;
+    margin: 0 auto;
+    margin-left: 40px;
+    .row{
+      background-color: white;
+      display: flex;
+      align-items: center;
+      padding: 0px 0px 0px 13px;
+      height: 68px;
+      .img{
+        width: 45px;
+        height: 45px;
+        border: solid 1px #ffffff;
+        border-radius: 50%;
+        background-image: url("../../assets/girl.png");
+        background-repeat: no-repeat;
+        background-position: center ;
+        margin: 0px 11px 0px 14px;
+        background-size: cover;
+      }
+      .name{
+        font-family: PTSans;
+        font-size: 15px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.8;
+        letter-spacing: normal;
+        text-align: left;
+        color: #50525e;
+        display: flex;
+        align-items: center;
+        width: 150px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+
+      }
+      .desc{
+        display: flex;
+        align-items: center;
+        font-family: PTSans;
+        font-size: 14px;
+        font-weight: normal;
+        font-style: normal;
+        font-stretch: normal;
+        line-height: 1.93;
+        letter-spacing: normal;
+        text-align: left;
+        color: #81838f;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 500px;
+        margin-right: 100px;
+
+      }
+      .label{
+        height: 28px;
+        border-radius: 2px;
+        background-color: #b3bfcc;
+        padding: 0 13px;
+        display: flex;
+        align-items: center;
+        width: 160px;
+        .label__text{
+          font-family: PTSans;
+          font-size: 14px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: normal;
+          letter-spacing: normal;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          text-align: center;
+          display: block;
+
+        }
+      }
+      .info{
+        width: 170px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .clock-time{
+          display: flex;
+          align-items: center;
+        }
+        .clock{
+          margin: 0 5px 0 23px;
+
+        }
+        .time{
+          font-family: PTSans;
+          font-size: 13px;
+          font-weight: normal;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 5.23;
+          letter-spacing: normal;
+          text-align: left;
+          color: #81838f;
+          display: flex;
+          align-items: center;
+        }
+      }
+
+      .message{
+        display: flex;
+        align-items: center;
+        margin-right: 21px;
+        .message-icon{
+          display: flex;
+          align-items: center;
+          content: url("../../assets/icn-message-active.png");
+        }
+        .message-count{
+          font-family: PTSans;
+          font-size: 15px;
+          font-weight: bold;
+          font-style: normal;
+          font-stretch: normal;
+          line-height: 1.8;
+          letter-spacing: normal;
+          text-align: left;
+          color: #81838f;
+          margin-left: 8px;
+        }
+      }
+    }
+    .row_active{
+      background-color: #f7f8fa;
+      .message-icon{
+        display: flex;
+        align-items: center;
+        content: url("../../assets/icn-message-active.png");
+
+      }
+      .message-count{
+        display: none;
+      }
+    }
+  }
+}

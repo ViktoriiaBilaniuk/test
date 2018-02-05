@@ -1,0 +1,1 @@
+define({  "title": "TM:TR API Doc",  "url": "http://127.0.0.1:3000/v1/time-reporting",  "name": "TM:TR",  "version": "0.1.0",  "description": "TechMagic: Time Reporting API Doc",  "sampleUrl": false,  "apidoc": "0.2.0",  "generator": {    "name": "apidoc",    "time": "2018-01-17T13:51:52.060Z",    "url": "http://apidocjs.com",    "version": "0.16.1"  }});

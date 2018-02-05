@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, RouterStateSnapshot, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Http } from '@angular/http';
+import {Http, RequestOptions} from '@angular/http';
 
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
@@ -12,10 +12,15 @@ const mixpanel = Mixpanel.init('127239b5e54a51aacf7fac2aaff646e4');
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+
+
+
+
   constructor(private auth: AuthService,
               private http: Http,
               private router: Router,
-              private messageService: MessageService) {}
+              private messageService: MessageService) {
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const href = window.location.href;
@@ -23,7 +28,10 @@ export class AuthGuard implements CanActivate {
     if (href.indexOf('google-auth') !== -1) {
       const query = href.substr(href.indexOf('?'));
 
-      this.http.get(`${API_ENDPOINT}/google-auth${query}`).subscribe((data) => {
+      const headers = new Headers();
+      const options = new RequestOptions({} );
+
+      this.http.get(`${API_ENDPOINT}/google-auth${query}`, options).subscribe((data) => {
         const user = JSON.parse(data['_body']);
 
         this.auth.setAuthDataToStorage(user);
